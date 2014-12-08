@@ -1,7 +1,15 @@
 ;(function(){
   'use strict';
 
-  angular.module('ab', [])
+  angular.module('ab', ['ngRoute'])
+    .config(function($routeProvider){
+      $routeProvider
+        .when('/', {
+          templateUrl: 'views/table.html'})
+        .when('/new', {
+          templateUrl: 'views/form.html'})
+        .otherwise({redirectTo: '/'});
+    })
     .controller('abController', function($http){
       var scope = this;
 
