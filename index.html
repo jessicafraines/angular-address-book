@@ -38,7 +38,7 @@
     </div>
     <input type="submit" value="add contact" ng-disabled="abForm.$invalid">
   </form>
-  <table>
+  <table class="table table-striped">
     <thead>
       <tr>
         <th>name</th>
@@ -47,17 +47,18 @@
         <th>github</th>
         <th>facebook</th>
         <th>linkedIn</th>
+        <th>delete</th>
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="contact in abCtrl.contacts">
+      <tr ng-repeat="(contactId, contact) in abCtrl.contacts">
         <td>{{contact.name}}</td>
         <td>{{contact.phone}}</td>
         <td>{{contact.email}}</td>
         <td>{{contact.github}}</td>
         <td>{{contact.facebook}}</td>
         <td>{{contact.linkedIn}}</td>
-        <td><button ng-click="abCtrl.deleteContact(contact)">x</button></td>
+        <td><button ng-click="abCtrl.deleteContact(contactId)">x</button></td>
       </tr>
     </tbody>
   </table>

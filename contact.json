@@ -1,0 +1,28 @@
+ [
+ {
+    "name": "Dakota Jane",
+    "phone": "615-555-1212",
+    "email": "dakotajane@gmail.com",
+    "github": "github.com/dakota",
+    "facebook": "facebook/dakota",
+    "linkedIn": "linkedIn/dakota"
+  },
+  {
+    "name": "Brian Raines",
+    "phone": "615-555-1212",
+    "email": "brianraines@gmail.com",
+    "github": "github.com/brian",
+    "facebook": "facebook/brian",
+    "linkedIn": "linkedIn/brian"
+  },
+  {
+    "name": "Jenny Becker",
+    "phone": "615-555-1212",
+    "email": "jennybecker@gmail.com",
+    "github": "github.com/jenny",
+    "facebook": "facebook/jenny",
+    "linkedIn": "linkedIn/jenny"
+  }
+  ]
+
+

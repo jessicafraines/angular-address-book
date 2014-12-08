@@ -2,54 +2,37 @@
   'use strict';
 
   angular.module('ab', [])
-    .controller('abController', function(){
+    .controller('abController', function($http){
       var scope = this;
 
-      scope.contacts = [
-        {
-          name: 'Dakota Jane',
-          phone: '615-555-1212',
-          email: 'dakotajane@gmail.com',
-          github: 'github.com/dakota',
-          facebook: 'facebook/dakota',
-          linkedIn: 'linkedIn/dakota'
-        },
-        {
-          name: 'Brian Raines',
-          phone: '615-555-1212',
-          email: 'brianraines@gmail.com',
-          github: 'github.com/brian',
-          facebook: 'facebook/brian',
-          linkedIn: 'linkedIn/brian'
-        },
-        {
-          name: 'Jenny Becker',
-          phone: '615-555-1212',
-          email: 'jennybecker@gmail.com',
-          github: 'github.com/jenny',
-          facebook: 'facebook/jenny',
-          linkedIn: 'linkedIn/jenny'
-        }
-      ];
-
-      scope.addNewContact = function(){
-        scope.contacts.push(scope.newContact);
-        scope.newContact = null;
-      }
-
-      scope.deleteContact = function(contact){
-        var index = scope.contacts.indexOf(contact);
-        scope.contacts.splice(index, 1);
-      }
-
-     /* $http.get('https://nss-addressbook.firebaseio.com/list.json')
+      $http.get('https://nss-addressbook.firebaseio.com/.json')
         .success(function(data){
           scope.contacts = data;
-        });
+        })
         .error(function(err){
-          alert(err);
-        });*/
+          alert('NOT WORKING');
+        });
 
-    
+      scope.addNewContact = function(){
+        $http.post('https://nss-addressbook.firebaseio.com/.json', scope.newContact)
+          .success(function(data){
+            scope.contacts[data.name] = scope.newContact;
+            scope.newContact = "";
+          })
+          .error(function(err){
+            alert('Nothing Added');
+          });
+      };
+
+      scope.deleteContact = function(contactId){
+        var url = 'https://nss-addressbook.firebaseio.com/' + contactId + '.json';
+        $http.delete(url)
+          .success(function(){
+            delete scope.contacts[contactId]
+          })
+          .error(function(err){
+            alert('Did not delete');
+          });
+      };
     });
 }());
