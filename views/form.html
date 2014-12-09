@@ -1,27 +1,27 @@
-<form name="abForm" ng-submit="abForm.$valid && abCtrl.addNewContact()" novalidate>
-    <div class="form-group" ng-class="{'has-error': !abCtrl.newContact.name}">
+<form name="abForm" ng-submit="abForm.$valid && ab.addNewContact()" novalidate>
+    <div class="form-group" ng-class="{'has-error': !ab.newContact.name}">
       <label class="control-label">name</label>
-      <input class="form-control" type="text" ng-model="abCtrl.newContact.name" required>
+      <input class="form-control" type="text" ng-model="ab.newContact.name" required>
     </div>
-    <div class="form-group" ng-class="{'has-error': !abCtrl.newContact.phone}">
+    <div class="form-group" ng-class="{'has-error': !ab.newContact.phone}">
       <label class="control-label">phone</label>
-      <input class="form-control" type="tel" ng-model="abCtrl.newContact.phone" required>
+      <input class="form-control" type="tel" ng-model="ab.newContact.phone" required>
     </div>
-    <div class="form-group" ng-class="{'has-error': !abCtrl.newContact.email}">
+    <div class="form-group" ng-class="{'has-error': !ab.newContact.email}">
       <label class="control-label">email</label>
-      <input class="form-control" type="email" ng-model="abCtrl.newContact.email">
+      <input class="form-control" type="email" ng-model="ab.newContact.email">
     </div>
-    <div class="form-group" ng-class="{'has-error': !abCtrl.newContact.github}">
+    <div class="form-group" ng-class="{'has-error': !ab.newContact.github}">
       <label class="control-label">github</label>
-      <input class="form-control" type="text" ng-model="abCtrl.newContact.github">
+      <input class="form-control" type="text" ng-model="ab.newContact.github">
     </div>
-    <div class="form-group" ng-class="{'has-error': !abCtrl.newContact.facebook}">
+    <div class="form-group" ng-class="{'has-error': !ab.newContact.facebook}">
       <label class="control-label">facebook</label>
-      <input class="form-control" type="text" ng-model="abCtrl.newContact.facebook">
+      <input class="form-control" type="text" ng-model="ab.newContact.facebook">
     </div>
-    <div class="form-group" ng-class="{'has-error': !abCtrl.newContact.linkedIn}">
+    <div class="form-group" ng-class="{'has-error': !ab.newContact.linkedIn}">
       <label class="control-label">linkedIn</label>
-      <input class="form-control" type="text" ng-model="abCtrl.newContact.linkedIn">
+      <input class="form-control" type="text" ng-model="ab.newContact.linkedIn">
     </div>
     <input type="submit" value="add contact" ng-disabled="abForm.$invalid">
   </form>

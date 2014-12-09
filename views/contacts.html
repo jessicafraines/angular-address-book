@@ -1,0 +1,27 @@
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th>name</th>
+        <th>phone</th>
+        <th>email</th>
+        <th>github</th>
+        <th>facebook</th>
+        <th>linkedIn</th>
+        <th>delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="(contactId, contact) in ab.contacts">
+        <td>{{contact.name}}</td>
+        <td>{{contact.phone}}</td>
+        <td>{{contact.email}}</td>
+        <td>{{contact.github}}</td>
+        <td>{{contact.facebook}}</td>
+        <td>{{contact.linkedIn}}</td>
+        <td>
+          <a href="/#/{{contactId}}" class="btn btn-primary">Show</a>
+        </td>
+        <td><button ng-click="ab.deleteContact(contactId)">x</button></td>
+      </tr>
+    </tbody>
+  </table>
