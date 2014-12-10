@@ -1,3 +1,4 @@
+
 ;(function(){
   'use strict';
 
@@ -24,75 +25,104 @@
           controller: 'EditController',
           controllerAs: 'ab'
         })
-         
         .otherwise({redirectTo: '/'});
     })
-    .controller('ShowController', function($http, $routeParams){
-      var scope = this;
-      var id = $routeParams.id;
-      $http.get('https://nss-addressbook.firebaseio.com/' + id + '.json')
+    .factory('AddressBookFactory', function($http, $location){
+      function getContact(contactId, cb){
+        var url = 'https://nss-addressbook.firebaseio.com/' + contactId + '.json'
+        $http.get(url)
         .success(function(data){
-          scope.contact = data;
+          cb(data);
         })
         .error(function(err){
           alert('NOT SHOWING');
         });
-    })//closes show controller
-
-    .controller('EditController', function($http, $routeParams, $location){
-      var scope = this;
-      var id = $routeParams.id;
-      $http.get('https://nss-addressbook.firebaseio.com/' + id + '.json')
-        .success(function(data){
-          scope.newContact = data;
-        })
-        .error(function(err){
-          alert('NOT SHOWING');
-        })
-      scope.addNewContact = function(){
-        $http.put(url, scope.newContact)
+      }
+      function editContact(contactId, contact){
+        var url = 'https://nss-addressbook.firebaseio.com/' + contactId + '.json'
+        $http.put(url, contact)
         .success(function(data){
           $location.path('/');
         })
         .error(function(err){
-          alert('NOT EDITING');
+          alert('NOT SHOWING');
         });
       }
-    })//closes edit controller
-
-    .controller('AddressBookController', function($http, $location){
-      var scope = this;
-
+      function getAllContacts(cb){
       $http.get('https://nss-addressbook.firebaseio.com/.json')
         .success(function(data){
-          scope.contacts = data;
+          cb(data);
         })
         .error(function(err){
           alert('NOT WORKING');
         });
-
-
-      scope.addNewContact = function(){
-        $http.post('https://nss-addressbook.firebaseio.com/.json', scope.newContact)
-          .success(function(data){
-            scope.contacts[data.name] = scope.newContact;
-            scope.newContact = "";
-            $location.path('/#/contacts');
-          })
-          .error(function(err){
-            alert('Nothing Added');
-          });
+      }
+      function addNewContact(contact, cb){  
+      $http.post('https://nss-addressbook.firebaseio.com/.json', contact)
+        .success(function(data){
+          cb(data);
+          $location.path('/');
+        })
+        .error(function(err){
+          alert('Nothing Added');
+        });
       };
-
-      scope.deleteContact = function(contactId){
+        function deleteContact(contactId, cb){
         var url = 'https://nss-addressbook.firebaseio.com/' + contactId + '.json';
         $http.delete(url)
           .success(function(){
-            delete scope.contacts[contactId]
+            cb();
           })
           .error(function(err){
             alert('Did not delete');
           });
+        };
+
+      return{
+        getContact: getContact,
+        editContact: editContact,
+        getAllContacts: getAllContacts,
+        addNewContact: addNewContact,
+        deleteContact: deleteContact
       };
-    });//closes addressbook controller
-}());
+    })//close factory
+
+    .controller('ShowController', function($routeParams, AddressBookFactory){
+      var scope = this;
+      var id = $routeParams.id;
+      AddressBookFactory.getContact(id, function(data){
+        scope.contact = data;
+      });
+    })//closes show controller
+
+    .controller('EditController', function($routeParams, AddressBookFactory){
+      var scope = this;
+      var id = $routeParams.id;
+      AddressBookFactory.getContact(id, function(data){
+        scope.newContact = data;
+      });
+      scope.addNewContact = function(){
+        AddressBookFactory.editContact(id, scope.newContact);
+      };
+    })//closes edit controller
+
+    .controller('AddressBookController', function(AddressBookFactory){
+      var scope = this;
+      
+      AddressBookFactory.getAllContacts(function(data){
+        scope.contacts = data;
+      });
+
+      scope.addNewContact = function(){
+        AddressBookFactory.addNewContact(scope.newContact, function(data){
+          scope.contacts[data.name] = scope.newContact;
+        });
+      };
+
+      scope.deleteContact = function(contactId){
+        AddressBookFactory.deleteContact(contactId, function(){    
+        delete scope.contacts[contactId]
+        })
+      };
+    })//closes addressbook controller
+}());//closes iife
